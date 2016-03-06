@@ -52,9 +52,10 @@
 <script type="text/javascript">
     var divMapa = document.getElementById('mapa');
 
-    var lat = 9.93203265, lon = -84.1810421;
-    function cargarMapa()
-    {
+    var lat = 9.93203265,
+        lon = -84.1810421;
+
+    function cargarMapa() {
         if ("geolocation" in navigator) {
             var options = {
                 enableHighAccuracy: true,
@@ -62,7 +63,7 @@
                 maximumAge: 0
             };
 
-            function success(pos) { 
+            function success(pos) {
                 var staAnaBounds = new google.maps.LatLngBounds(
                     new google.maps.LatLng(9.862, -84.246),
                     new google.maps.LatLng(9.975, -84.145)
@@ -83,7 +84,11 @@
             };
 
             navigator.geolocation.getCurrentPosition(success, error, options);
-    }
+        }
+        else {
+            crearMapa();
+        }
+
 
 
     }
