@@ -1,5 +1,6 @@
 # Instrucciones de instalación
 * Agregar el archivo .env con la llave de aplicacion y las opciones de MySQL
+* Ejecutar el comando *composer install*
 * Ejecutar el comando *php artisan migrate* para crear las tablas de la base de datos
 * Ejecutar el comando *php artisan db:seed* para rellenar la base de datos con los valores necesarios para la aplicación de Santa Ana (deben estar todas las tablas en blanco, por asunto de valores de identificación)
 * Ejecutar el comando *php artisan serve* para poder acceder al servidor
