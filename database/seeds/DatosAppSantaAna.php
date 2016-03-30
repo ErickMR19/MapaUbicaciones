@@ -21,7 +21,7 @@ class DatosAppSantaAna extends Seeder
             'provincia_id' => '1'
         ]);
         DB::statement( 'SET SESSION SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";' );
-        DB::table('Categories')->insert(
+        DB::table('categories')->insert(
         [
             [
                 'id' => 0,
@@ -57,7 +57,7 @@ class DatosAppSantaAna extends Seeder
             ],
         ]
         );
-          DB::table('Distritos')->insert(
+          DB::table('distritos')->insert(
         [
             [
                 'nombre' => 'Santa Ana Centro',
