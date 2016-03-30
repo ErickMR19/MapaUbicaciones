@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Redirect;
 use MapaUbicaciones\Http\Controllers\Controller;
+use Excel;
 use View;
 use DB;
 
@@ -96,7 +97,6 @@ class UbicacionesController extends Controller
    	public function updateUbicacion($id)
    	{
          $input = Input::all();
-         
 
          $validation = Validator::make($input, Ubicacion::$rules);
 
@@ -141,6 +141,66 @@ class UbicacionesController extends Controller
       return Redirect::route('indexubicacion');
    	}
     
+    public function importExcel()
+    {
+      if(Input::hasFile('import_file'))
+      {
+          $path = Input::file('import_file')->getRealPath();
+          
+          $data = Excel::selectSheets('Todos')->load($path, function($reader) {
+          })->select(array('nombre','telefono','web','distrito_id','categoria_id'))->get();
+          if(!empty($data) && $data->count()){
+            foreach ($data as $key =>$value) {
+
+
+              $insert = ['nombre' => $value->nombre, 
+                           'telefono' => $value->telefono, 
+                           'web' => $value->web,
+                           'latitude' => '9.93203265',
+                           'longitude' => '-84.1810421',
+                           'distrito_id' => $value->distrito_id,
+                           'categories_id' => $value->categoria_id
+                          ];
+
+              $validation = Validator::make($insert, Ubicacion::$rules);
+
+              if ($validation->passes())
+              {
+                   
+                $lat='9.93203265';
+                $lon='-84.1810421';
+                $nombre=$value->nombre;
+                $categories_id=$value->categoria_id;
+                $distrito_id=$value->distrito_id;
+                $latitude=$lat;
+                $longitude=$lon;
+                $telefono=$value->telefono;
+                $web=$value->web;
+
+
+                $geometrias="GeomFromText('POINT(".$lon." ".$lat.")')";
+
+                $geometria=DB::raw($geometrias);
+
+                DB::table('locations')->insert(
+                      ['nombre'=>$nombre,
+                       'categories_id'=>$categories_id,
+                       'distrito_id'=>$distrito_id,
+                       'latitude'=>$latitude,
+                       'longitude'=>$longitude,
+                       'telefono'=>$telefono,
+                       'web'=>$web,
+                       'geometria'=>$geometria
+                       ]
+                      );
+              }
+            }
+          }
+
+        }
+      return Redirect::route('indexubicacion');
+    }
+
     public function allToJson(){
    		$ubicaciones = Ubicacion::select('id', 'latitude as X', 'longitude as Y' ,'nombre', 'telefono', 'distrito_id as distrito', 'categories_id as categoria')->get();
         //return print_r($ubicaciones);

@@ -8,8 +8,8 @@
                 <div class="panel-body">
 					<h3>Lista de Ubicaciones</h3>
 						<p>{{link_to_route('createubicacion', 'Registrar Ubicacion')}}</p>
-
 							@if($ubicaciones->count())
+
 							<div class="table-responsive">
 							<div class="bodycontainer scrollable">
 							<table class="table table-hover table-bordered table-scrollable">
@@ -50,7 +50,16 @@
 						@else
 							No hay Ubicaciones
 						@endif
-						
+
+						{{Form::open(array('route' => 'importexcel', 'files'=>true))}}
+							<div class="form-group">
+							{{ Form::file('import_file',['class' => 'field'])}}
+							{{ Form::submit('Cargar Ubicaciones desde Excel', array('class' => 'btn btn-info')) }}
+							</div>
+						{{Form::close()}}
+						@if ($errors->any())
+						 <span class="help-inline" style="color:red">*{{ implode('', $errors->all(':message')) }}</span>
+						@endif
                 </div>
             </div>
         </div>

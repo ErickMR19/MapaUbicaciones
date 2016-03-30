@@ -32,6 +32,16 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('/home','HomeController@index');
 
 
+	Route::get('usuarios',array('as'=>'indexusuario','uses'=>'UsuariosController@indexUsuario'));
+	Route::get('usuarios/create',array('as'=>'createusuario','uses'=>'UsuariosController@createUsuario'));
+	Route::post('usuarios/register',array('as'=>'storeusuario','uses'=>'UsuariosController@saveUsuario'));
+	Route::get('usuarios/{usuario}',array('as'=>'showusuario','uses'=>'UsuariosController@showUsuario'));
+	Route::get('usuarios/{usuario}/edit',array('as'=>'editusuario','uses'=>'UsuariosController@editUsuario'));
+	Route::put('usuarios/{usuario}',array('as'=>'updateusuario','uses'=>'UsuariosController@updateUsuario'));
+	Route::get('usuarios/{usuario}/pass',array('as'=>'passusuario','uses'=>'UsuariosController@passUsuario'));
+	Route::put('usuarios/{usuario}/pass',array('as'=>'updatepassusuario','uses'=>'UsuariosController@updatepassUsuario'));
+	Route::delete('usuarios/{usuario}',array('as'=>'deleteusuario','uses'=>'UsuariosController@deleteUsuario'));
+
 	Route::get('provincias',array('as'=>'indexprovincia','uses'=>'ProvinciasController@indexProvincia'));
 	Route::get('provincias/json',array('as'=>'alljson','uses'=>'ProvinciasController@allToJson'));
 	Route::get('provincias/create',array('as'=>'createprovincia','uses'=>'ProvinciasController@createProvincia'));
@@ -69,6 +79,7 @@ Route::group(['middleware' => 'web'], function () {
 	Route::get('ubicaciones/json',array('as'=>'ubicacionesjson','uses'=>'UbicacionesController@allToJson'));
 	Route::get('ubicaciones/create',array('as'=>'createubicacion','uses'=>'UbicacionesController@createUbicacion'));
 	Route::post('ubicaciones/register',array('as'=>'storeubicacion','uses'=>'UbicacionesController@saveUbicacion'));
+	Route::post('ubicaciones/importexcel',array('as'=>'importexcel','uses'=>'UbicacionesController@importExcel'));
 	Route::get('ubicaciones/{ubicacion}',array('as'=>'showubicacion','uses'=>'UbicacionesController@showUbicacion'));
 	Route::get('ubicaciones/{ubicacion}/edit',array('as'=>'editubicacion','uses'=>'UbicacionesController@editUbicacion'));
 	Route::put('ubicaciones/{ubicacion}',array('as'=>'updateubicacion','uses'=>'UbicacionesController@updateUbicacion'));

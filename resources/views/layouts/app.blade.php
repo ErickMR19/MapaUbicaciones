@@ -55,6 +55,12 @@
                     <li><a href="{{ url('/distritos') }}">Distritos</a></li>
                     <li><a href="{{ url('/categorias') }}">Categorías</a></li>
                     <li><a href="{{ url('/ubicaciones') }}">Ubicaciones</a></li>
+                    @if (Auth::guest())
+                    @else
+                        @if (Auth::user()->name=="Administrador")
+                            <li><a href="{{ url('/usuarios') }}">Usuarios</a></li>
+                        @endif
+                    @endif
                 </ul>
 
                 <!-- Right Side Of Navbar -->
@@ -62,7 +68,6 @@
                     <!-- Authentication Links -->
                     @if (Auth::guest())
                         <li><a href="{{ url('/login') }}">Iniciar</a></li>
-                        <li><a href="{{ url('/register') }}">Registrarse</a></li>
                     @else
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
