@@ -16,8 +16,8 @@ class CreateLocationsTable extends Migration
             $table->engine = 'MYISAM';
             $table->increments('id');
             $table->string('nombre');
-            $table->string('telefono');
-            $table->string('web');
+            $table->string('telefono')->default(' ');
+            $table->string('web')->nullable();
             $table->integer('categories_id')->unsigned()->index();
             $table->integer('distrito_id')->unsigned()->index();
             $table->decimal('latitude', 10, 8); 
