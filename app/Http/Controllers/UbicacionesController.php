@@ -148,7 +148,7 @@ class UbicacionesController extends Controller
           $path = Input::file('import_file')->getRealPath();
           
           $data = Excel::selectSheets('Todos')->load($path, function($reader) {
-          })->select(array('nombre','telefono','web','distrito_id','categoria_id'))->get();
+          })->select(array('nombre','telefono','web','distrito_id','categoria_id','latitude','longitude'))->get();
           if(!empty($data) && $data->count()){
             foreach ($data as $key =>$value) {
 
@@ -156,8 +156,8 @@ class UbicacionesController extends Controller
               $insert = ['nombre' => $value->nombre, 
                            'telefono' => $value->telefono, 
                            'web' => $value->web,
-                           'latitude' => '9.93203265',
-                           'longitude' => '-84.1810421',
+                           'latitude' => $value->latitude,
+                           'longitude' => $value->longitude,
                            'distrito_id' => $value->distrito_id,
                            'categories_id' => $value->categoria_id
                           ];
@@ -166,14 +166,11 @@ class UbicacionesController extends Controller
 
               if ($validation->passes())
               {
-                   
-                $lat='9.93203265';
-                $lon='-84.1810421';
                 $nombre=$value->nombre;
                 $categories_id=$value->categoria_id;
                 $distrito_id=$value->distrito_id;
-                $latitude=$lat;
-                $longitude=$lon;
+                $latitude=$value->latitude;
+                $longitude=$value->longitude;
                 $telefono=$value->telefono;
                 $web=$value->web;
 
